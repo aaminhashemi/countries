@@ -7,15 +7,40 @@ import {
   Row,
   Button,
   Col,
-  FormGroup,
   Input,
   InputGroupText,
   InputGroup,
+  CardTitle,
+  CardBody,
+  CardSubtitle,
+  Card,
+  CardText,
 } from "reactstrap";
-import { useState } from "react";
+import {useEffect, useState} from "react";
+
 const Index = () => {
     const [mode, setMode] = useState("light");
 
+    const [countries,setCountries]=useState([]);
+    useEffect(()=>{
+        fetch('./data.json'
+            ,{
+              headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+            }
+        )
+            .then(function(response){
+              console.log(response)
+              return response.json();
+            })
+            .then(function(myJson) {
+              console.log(myJson);
+              setCountries(myJson)
+            });
+
+    },[])
   const handleModeChange = () => {
     setMode(mode === "light" ? "dark" : "light");
   };
@@ -56,6 +81,35 @@ const Index = () => {
             </Col>
           </Row>
         </Form>
+      </div>
+      <div className='container-fluid d-flex flex-row flex-wrap justify-content-between'>
+          {countries?.map((country) =>
+
+              <Card
+              style={{
+              width: '18rem'
+          }}
+              className='my-3'
+              >
+              <img
+              alt="Sample"
+              src={country.flags.svg}
+              />
+              <CardBody>
+              <CardTitle tag="h5">
+                  {country.name}
+              </CardTitle>
+              <CardText>
+                  {`population: ${country.population}`}
+              </CardText>
+              <Button>
+              Button
+              </Button>
+              </CardBody>
+              </Card>
+
+              )}
+
       </div>
     </>
   );
