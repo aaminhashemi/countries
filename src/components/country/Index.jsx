@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import {Link} from 'react-router-dom'
 import {
   Navbar,
   NavbarBrand,
@@ -20,7 +21,10 @@ import {useEffect, useState} from "react";
 
 const Index = () => {
     const [mode, setMode] = useState("light");
-
+    const myData = {
+        name: 'Some thing',
+        price: 123
+    }
     const [countries,setCountries]=useState([]);
     useEffect(()=>{
         fetch('./data.json'
@@ -83,9 +87,9 @@ const Index = () => {
         </Form>
       </div>
       <div className='container-fluid d-flex flex-row flex-wrap justify-content-between'>
-          {countries?.map((country) =>
+          {countries?.map((country,index) =>
 
-              <Card
+              <Card key={index}
               style={{
               width: '18rem'
           }}
@@ -99,6 +103,7 @@ const Index = () => {
               <CardTitle tag="h5">
                   {country.name}
               </CardTitle>
+                  <Link to={'/test'} state={country}>test</Link>
               <CardText>
                   {`population: ${country.population}`}
               </CardText>
