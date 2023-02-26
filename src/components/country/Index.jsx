@@ -107,7 +107,7 @@ const Index = () => {
             style={{
               width: "18rem",
             }}
-            className="my-3"
+            className="my-3 shadow-sm"
           >
             <img alt="Sample" src={country.flags.svg} />
             <CardBody>
